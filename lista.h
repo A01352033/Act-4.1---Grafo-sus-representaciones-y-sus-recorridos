@@ -1,38 +1,61 @@
-#ifndef LISTA_H
-#define LISTA_H
+#ifndef MATRIZ_H
+#define MATRIZ_H
 
 #include <vector>
-#include <map>
-#include <set>
-#include <stack>
-#include <queue>
-#include <iostream>
-#include <fstream>
-#include "grafica.h"
+#include <sstream>  
+#include <set>    
+#include <stack>    
+#include <queue>    
+#include <optional> 
+#include <memory>   
 
-template <class T>
-class lista: public grafica<T>
-{
+template <class Vertex>
+class UMatrix_graph {
 public:
-    lista(bool dir = false);
-    ~lista();
-    std::vector<T> getVert() const;
-    std::vector<T> getNB(T) const;
+    // Constructor
+    UMatrix_graph() = default;
+    UMatrix_graph(unsigned int, std::optional<bool> c_direction = true);
 
-    void punto(T, T);
-    void deleteP(T, T);
-    void vertice(T);
-    void deleteV(T);
-    bool isPunto(T, T) const;
-    bool isVertice(T) const;
+    // Destructor
+    ~UMatrix_graph() = default;
 
-    template <class U>
-    friend std::ostream &operator<<(std::ostream &, lista<U> &);
-    
+    // Access Methods
+    int get_next() const;
+    unsigned int get_size() const;
+    bool get_direction() const;
+
+    std::vector<Vertex> get_vertexes() const;
+    std::set<Vertex> get_neighbours(Vertex) const;
+
+    // operator overload
+    template <class overload>
+    friend std::ostream &operator<<(std::ostream &,
+                                    const std::shared_ptr<UMatrix_graph<overload>> &);
+
+    // Functions
+    void load_graph(std::fstream &);
+    void add_edge(Vertex, Vertex);
+    void remove_edge(Vertex, Vertex);
+    void add_vertex(Vertex);
+    void remove_vertex(Vertex);
+
+    bool contains_vertex(Vertex) const;
+    bool contains_edge(Vertex, Vertex) const;
+
+    std::set<Vertex> dfs(const Vertex &) const;
+    std::set<Vertex> bfs(const Vertex &) const;
+
 private:
-    int size;
-    bool directed;
-    std::set<T> vertices;
-    std::map<T, std::set<T>> puntos;
+    unsigned int size;
+    int next;
+    bool direction;
+    std::vector<Vertex> vertexes;
+    std::vector<std::vector<bool>> edges;
+
+    // private functions
+    Vertex index_of(Vertex) const;
+    bool is_edge(Vertex, Vertex) const;
+    bool is_vertex(Vertex) const;
 };
+
 #endif
