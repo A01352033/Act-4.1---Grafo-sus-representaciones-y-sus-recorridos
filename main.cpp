@@ -4,28 +4,45 @@ Nombre: main.cpp
 Autor: Manuel Villalpando - Diego Vega
  */
 
-#include "matriz.cpp"
-#include "lista.cpp"
+#include <iostream>
+#include <fstream>
+#include <memory>
 
-int main(int argc, char *argv[])
-{
-    listagrafica<char> graph(true);
-    graph.vertice('A');
-    graph.vertice('B');
-    graph.vertice('C');
-    graph.vertice('D');
-    graph.vertice('E');
-    graph.punto('A', 'B');
-    graph.punto('A', 'C');
-    graph.punto('B', 'C');
-    graph.punto('B', 'D');
-    graph.punto('C', 'D');
-    graph.punto('C', 'E');
-    graph.punto('D', 'E');
-    graph.dfs('B');
-    std::cout << std::endl;
-    graph.bfs('B');
-    std::cout << std::endl;
-    std::cout << graph;
-    return 0;
+#include "matriz.h"
+
+int main() {
+    std::fstream input_file("graph.txt", std::ios::in);
+    if (!input_file) {
+        std::cout << "Error opening file" << std::endl;
+        return 1;
+    }
+
+    int first_line;
+    input_file >> first_line;
+
+    std::shared_ptr<UMatrix_graph<std::string>> graph =
+        std::make_shared<UMatrix_graph<std::string>>(first_line);
+
+    graph->add_edge("A", "B");
+    graph->add_edge("A", "C");
+    graph->add_edge("A", "D");
+    graph->add_edge("A", "E");
+    graph->add_edge("B", "C");
+    graph->add_edge("B", "E");
+    graph->add_edge("C", "D");
+    graph->add_edge("C", "E");
+    graph->add_edge("C", "A");
+    graph->add_edge("D", "A");
+    graph->add_edge("D", "F");
+    graph->add_edge("D", "C");
+    graph->add_edge("D", "B");
+    graph->add_edge("E", "A");
+    graph->add_edge("E", "B");
+    graph->add_edge("E", "C");
+    graph->add_edge("E", "D");
+    graph->add_edge("E", "F");
+    graph->add_edge("F", "D");
+    graph->add_edge("F", "E");
+
+    std::cout << graph << std::endl;
 }
