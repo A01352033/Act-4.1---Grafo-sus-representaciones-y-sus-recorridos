@@ -7,21 +7,22 @@ Autor: Manuel Villalpando - Diego Vega
 #include <iostream>
 #include <fstream>
 #include <memory>
-
 #include "matriz.h"
 
+using namespace std;
+
 int main() {
-    std::fstream input_file("graph.txt", std::ios::in);
+    fstream input_file("grafica.txt", ios::in);
     if (!input_file) {
-        std::cout << "Error opening file" << std::endl;
+        cout << "Error al abrir el archivo" << endl;
         return 1;
     }
 
     int first_line;
     input_file >> first_line;
 
-    std::shared_ptr<UMatrix_graph<std::string>> graph =
-        std::make_shared<UMatrix_graph<std::string>>(first_line);
+    shared_ptr<UMatrix_graph<string>> graph =
+        make_shared<UMatrix_graph<string>>(first_line);
 
     graph->add_edge("A", "B");
     graph->add_edge("A", "C");
@@ -44,5 +45,5 @@ int main() {
     graph->add_edge("F", "D");
     graph->add_edge("F", "E");
 
-    std::cout << graph << std::endl;
+    cout << graph << endl;
 }
