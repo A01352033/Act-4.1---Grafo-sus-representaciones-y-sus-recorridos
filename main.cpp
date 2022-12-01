@@ -1,3 +1,9 @@
+
+/* 
+Nombre: main.cpp
+Autor: Manuel Villalpando - Diego Vega
+ */
+
 #include "matriz.cpp"
 #include "lista.cpp"
 
