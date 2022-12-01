@@ -7,7 +7,7 @@ Autor: Manuel Villalpando - Diego Vega
 #include <iostream>
 #include <fstream>
 #include <memory>
-#include "matriz.h"
+#include "matriz.cpp"
 
 using namespace std;
 
